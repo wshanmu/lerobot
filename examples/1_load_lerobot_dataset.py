@@ -36,18 +36,19 @@ from lerobot.common.datasets.lerobot_dataset import LeRobotDataset, LeRobotDatas
 
 # We ported a number of existing datasets ourselves, use this to see the list:
 print("List of available datasets:")
-pprint(lerobot.available_datasets)
+# pprint(lerobot.available_datasets)
 
 # You can also browse through the datasets created/ported by the community on the hub using the hub api:
 hub_api = HfApi()
 repo_ids = [info.id for info in hub_api.list_datasets(task_categories="robotics", tags=["LeRobot"])]
-pprint(repo_ids)
+# pprint(repo_ids)
 
 # Or simply explore them in your web browser directly at:
 # https://huggingface.co/datasets?other=LeRobot
 
 # Let's take this one for this example
 repo_id = "lerobot/aloha_mobile_cabinet"
+repo_id = "koenvanwijk/orange50-variation-2"
 # We can have a look and fetch its metadata to know more about it:
 ds_meta = LeRobotDatasetMetadata(repo_id)
 
@@ -68,19 +69,26 @@ pprint(ds_meta.features)
 # You can also get a short summary by simply printing the object:
 print(ds_meta)
 
-# You can then load the actual dataset from the hub.
-# Either load any subset of episodes:
-dataset = LeRobotDataset(repo_id, episodes=[0, 10, 11, 23])
+# # You can then load the actual dataset from the hub.
+# # Either load any subset of episodes:
+# dataset = LeRobotDataset(repo_id, episodes=[0, 10, 11, 23])
 
-# And see how many frames you have:
-print(f"Selected episodes: {dataset.episodes}")
-print(f"Number of episodes selected: {dataset.num_episodes}")
-print(f"Number of frames selected: {dataset.num_frames}")
+# # And see how many frames you have:
+# print(f"Selected episodes: {dataset.episodes}")
+# print(f"Number of episodes selected: {dataset.num_episodes}")
+# print(f"Number of frames selected: {dataset.num_frames}")
 
 # Or simply load the entire dataset:
 dataset = LeRobotDataset(repo_id)
 print(f"Number of episodes selected: {dataset.num_episodes}")
 print(f"Number of frames selected: {dataset.num_frames}")
+
+print("Attributes of dataset:")
+for attr in dir(dataset):
+    if not attr.startswith("__"):
+        print(attr)
+exit()
+
 
 # The previous metadata class is contained in the 'meta' attribute of the dataset:
 print(dataset.meta)
